@@ -1,2 +1,3 @@
-# mango-network-website
-Web application for the MANGO camera network
+# MANGO Network Web Application
+
+Web application for the MANGO camera network to display system status and access data products.
