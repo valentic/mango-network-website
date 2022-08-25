@@ -15,8 +15,6 @@ import {
     Text,
     Paper,
     createStyles,
-    useMantineTheme,
-    MediaQuery
 } from '@mantine/core'
 
 const useStyles = createStyles((theme) => {
@@ -47,9 +45,11 @@ const Heartbeat = ({jsdate, status}) => {
             color = 'yellow.8'
         }
         msg = <> 
-              {print.as_moment(jsdate, 'YYYY-MM-DD HH:mm')}
+              {print.as_moment(jsdate, 'YYYY-MM-DD')}
               <br /> 
-              {print.as_fromnow(jsdate)}
+              {print.as_moment(jsdate, 'HH:mm')} UTC
+              <br /> 
+              {print.capitalize(print.as_fromnow(jsdate))}
               </>
     }
 
@@ -63,7 +63,6 @@ const Heartbeat = ({jsdate, status}) => {
 const StationList = () => {
 
     const navigate = useNavigate()
-    const theme = useMantineTheme()
     const { classes } = useStyles()
     const [ hoverStation, setHoverStation ] = React.useState(undefined)
 
@@ -80,7 +79,12 @@ const StationList = () => {
                 queryKey: ['meshnodes'], 
                 queryFn: apiService.getMeshNodes, 
                 refetchInterval: refetchInterval
-            }
+            },
+            { 
+                queryKey: ['cameras'], 
+                queryFn: apiService.getCameras, 
+                refetchInterval: refetchInterval
+            },
         ]
     })
 
@@ -100,6 +104,7 @@ const StationList = () => {
     }
 
     const stations = results[0].data.stations
+    const cameras = results[2].data.cameras
     const retirednodes = RetiredStations.reduce((a,v) => ({...a, [v.name]: v}), {})
 
     const stationnodes = results[1].data.meshnodes.filter(
@@ -118,6 +123,18 @@ const StationList = () => {
         const heartbeat = meshnodes[station.name]?.checked_on
         const status = station.status
 
+        const cameraNames = 
+                    cameras
+                    .filter(camera => camera.station === station.name)
+                    .map(camera => 
+                        <Text key={camera.instrument}
+                              align="right"
+                              color="gray.7"
+                        >
+                          {print.capitalize(camera.instrument)}&nbsp;camera
+                        </Text>
+                    )
+
         return (
             <tr key={station.id} 
                 onClick={showDetails} 
@@ -129,19 +146,18 @@ const StationList = () => {
                 <Text weight={700} size="sm">
                   {station.name.toUpperCase()}
                 </Text>
-                <Text color={theme.colors.gray[7]}> 
+                <Text color="gray.7">
                   {station.label}
                 </Text>
+                <Text color="gray.7"> 
+                  {print.as_latitude_deg(lat)}
+                  {", "} 
+                  {print.as_longitude_deg(lon)}
+                 </Text>
               </td>
-              <MediaQuery smallerThan="sm" styles={{display: 'none'}}>
-                <td>
-                  <Text align="right" size="11" color="gray.7"> 
-                    {print.as_latitude_deg(lat)}
-                    <br/> 
-                    {print.as_longitude_deg(lon)}
-                   </Text>
-                </td>
-              </MediaQuery>
+              <td>
+                {cameraNames}
+              </td>
               <td>
                 <Heartbeat jsdate={heartbeat} status={status} />
               </td>
@@ -158,10 +174,8 @@ const StationList = () => {
                   <thead>
                     <tr>
                       <th>Site</th>
-                      <MediaQuery smallerThan="sm" styles={{display: 'none'}}>
-                        <th style={{textAlign: 'right'}}>Coordinates</th>
-                      </MediaQuery>
-                      <th style={{textAlign: 'right'}}>Heartbeat (UTC)</th>
+                      <th style={{textAlign: 'right'}}>Instruments</th>
+                      <th style={{textAlign: 'right'}}>Heartbeat</th>
                     </tr>
                   </thead>
                   <tbody>{rows}</tbody>

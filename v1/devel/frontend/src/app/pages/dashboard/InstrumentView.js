@@ -383,7 +383,7 @@ const InstrumentView = () => {
                 selectedDate={utcdate} 
               /> 
               <Button component={Link} to="../../.."> 
-                Back to Stations
+                Back to Site List
               </Button>
             </Stack>
           </Card>
@@ -393,7 +393,7 @@ const InstrumentView = () => {
                 onTabChange={changeInstrument}
                 variant="pills"
             >
-              <Tabs.List position="center" m={5}>
+              <Tabs.List position="center" m={5} > 
                 <Tabs.Tab 
                   value="greenline"
                   color="green.4"
