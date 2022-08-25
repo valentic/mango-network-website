@@ -2,3 +2,13 @@
     - Release 0.0.0 
     - Begin development 
 
+2022-08-18  Todd Valentic
+    - Release 1.0.0
+    - Feature complete 
+
+2022-08-25  Todd Valentic
+    - Release 1.0.9
+    - Add instruments to sites list
+    - Change station -> site
+    - Change location of tab list in instrument viewer
+
