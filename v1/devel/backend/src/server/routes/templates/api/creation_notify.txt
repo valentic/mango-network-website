@@ -1,0 +1,18 @@
+ISR Summer School Application 
+-----------------------------
+
+A new application has been received from: 
+
+  First name : {{user.firstname}}
+  Last name  : {{user.lastname}}
+  University : {{user.university}}
+  Email addr : {{user.email}}
+  Created on : {{user.created_on}}
+
+See the full entry at:
+
+    https://amisr.com/school/admin/applications/{{user.id}}
+
+Admin link: 
+
+    https://amisr.com/school/admin
