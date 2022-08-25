@@ -393,22 +393,6 @@ const InstrumentView = () => {
                 onTabChange={changeInstrument}
                 variant="pills"
             >
-              <Tabs.Panel value="greenline">
-                <MovieViewer 
-                  date={utcdate} 
-                  station={station} 
-                  instrument={instrument} 
-                /> 
-              </Tabs.Panel>
-
-              <Tabs.Panel value="redline">
-                <MovieViewer 
-                  date={utcdate} 
-                  station={station} 
-                  instrument={instrument} 
-                /> 
-              </Tabs.Panel>
-
               <Tabs.List position="center" m={5}>
                 <Tabs.Tab 
                   value="greenline"
@@ -428,6 +412,22 @@ const InstrumentView = () => {
                   Redline Camera
                 </Tabs.Tab>
               </Tabs.List>
+ 
+              <Tabs.Panel value="greenline">
+                <MovieViewer 
+                  date={utcdate} 
+                  station={station} 
+                  instrument={instrument} 
+                /> 
+              </Tabs.Panel>
+
+              <Tabs.Panel value="redline">
+                <MovieViewer 
+                  date={utcdate} 
+                  station={station} 
+                  instrument={instrument} 
+                /> 
+              </Tabs.Panel>
 
             </Tabs>
           </Paper>
