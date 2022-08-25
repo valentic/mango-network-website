@@ -123,7 +123,7 @@ const Sites = () => {
                 <Table highlightOnHover verticalSpacing="5" fontSize="xs"> 
                   <thead>
                     <tr>
-                      <th>Station</th>
+                      <th>Site</th>
                       <th style={{textAlign: 'right'}}>Coordinates</th>
                       <th>Cameras</th>
                       <th>Status</th>

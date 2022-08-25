@@ -157,7 +157,7 @@ const StationList = () => {
                 <Table highlightOnHover verticalSpacing="5" fontSize="xs"> 
                   <thead>
                     <tr>
-                      <th>Station</th>
+                      <th>Site</th>
                       <MediaQuery smallerThan="sm" styles={{display: 'none'}}>
                         <th style={{textAlign: 'right'}}>Coordinates</th>
                       </MediaQuery>
