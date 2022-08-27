@@ -44,11 +44,12 @@ const App = () => {
             <Route path="resources" element={<Page.Resources.Home/>} >
               <Route path="software" element={<Page.Resources.Software/>} />
               <Route path="maillists" element={<Page.Resources.MailLists/>} />
+              <Route path="publications" element={<Page.Resources.Publications/>} />
               <Route index element={<Navigate to="software" replace />} />
             </Route>
 
             <Route path="database" element={<Page.Dashboard.Home/>} >
-              <Route path="stations">
+              <Route path="sites">
                 <Route index element={<Page.Dashboard.Stations.List />} />
                 <Route path=":station">
                   <Route index element={<Page.Dashboard.Instrument.Redirect />} />
@@ -58,7 +59,7 @@ const App = () => {
                   </Route>
                 </Route>
                </Route>
-               <Route index element={<Navigate to="stations" replace />} />
+               <Route index element={<Navigate to="sites" replace />} />
             </Route>
 
 

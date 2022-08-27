@@ -40,21 +40,22 @@ const Layout = () => {
     const auth = useAuth()
 
     const resourcesMenu = [
-        { label: 'Software',    link:   '/resources/software' },
-        { label: 'Mail Lists',  link:   '/resources/maillists' },
+        { label: 'Software',        link:   '/resources/software' },
+        { label: 'Mail Lists',      link:   '/resources/maillists' },
+        { label: 'Publications',    link:  '/resources/publications' },
         ]
 
     const aboutMenu = [
-        { label: 'Science',     link:   '/about/science' },
-        { label: 'Instrument',  link:   '/about/instrument' },
-        { label: 'Sites',       link:   '/about/sites' }
+        { label: 'Science',         link:   '/about/science' },
+        { label: 'Instrument',      link:   '/about/instrument' },
+        { label: 'Sites',           link:   '/about/sites' }
         ]
 
     let links = [
         { label: 'Home',        link: '/' },
         { label: 'About',       menu: aboutMenu },
         { label: 'Resources',   menu: resourcesMenu },
-        { label: 'Database',   link: '/database' },
+        { label: 'Database',    link: '/database' },
         { label: 'Contact Us',  link: '/contacts' },
         ]
 
