@@ -204,7 +204,7 @@ config_release () {
     echo "Setting release to ${release}"
 
     sed -i.bak "s|\(version=\)\([^ ]*\)|\1'${release}'|" $BACKEND_DIR/src/server/metadata.py
-    sed -i.bak "s|\(\"version\":\) *\([^ ]*\)|\1 '${release}',|" $FRONTEND_DIR/package.json
+    sed -i.bak "s|\(\"version\":\) *\([^ ]*\)|\1 \"${release}\",|" $FRONTEND_DIR/package.json
     sed -i.bak "s|\(REACT_APP_RELEASE=\)\([^ ]*\)|\1'${release}'|" $FRONTEND_DIR/.env
 }
 
