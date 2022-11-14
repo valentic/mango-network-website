@@ -23,13 +23,17 @@
 #               Add branch config parameter
 #               Release 1.1.1
 #
+#   2022-11-14  Todd Valentic
+#               Fix replacement of release (version) in package.json
+#               Release 1.1.2
+#
 ##########################################################################
 
 set -o errexit   # abort on nonzero exitstatus
 set -o nounset   # abort on unbound variable
 set -o pipefail  # do not hide errors within pipes
 
-VERSION=1.1.1
+VERSION=1.1.2
 
 BASEDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 FRONTEND_DIR=${BASEDIR}/devel/frontend
@@ -200,7 +204,7 @@ config_release () {
     echo "Setting release to ${release}"
 
     sed -i.bak "s|\(version=\)\([^ ]*\)|\1'${release}'|" $BACKEND_DIR/src/server/metadata.py
-    sed -i.bak "s|\("version":\) *\([^ ]*\)|\1 '${release}',|" $FRONTEND_DIR/package.json
+    sed -i.bak "s|\(\"version\":\) *\([^ ]*\)|\1 '${release}',|" $FRONTEND_DIR/package.json
     sed -i.bak "s|\(REACT_APP_RELEASE=\)\([^ ]*\)|\1'${release}'|" $FRONTEND_DIR/.env
 }
 
