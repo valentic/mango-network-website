@@ -1,3 +1,3 @@
-version='1.0.11'
+version='1.0.12'
 project='mango_network_website'
 branch='v1'
