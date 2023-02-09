@@ -1,7 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ComposableMap, Geographies, Geography, Marker } from 'react-simple-maps'
-import { IconVideo } from '@tabler/icons'
+import { IconVideo } from '@tabler/icons-react'
 
 import geoUrl from 'support/assets/states-10m.json'
 

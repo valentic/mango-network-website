@@ -2,7 +2,7 @@ import React from 'react'
 import { useDisclosure } from '@mantine/hooks'
 import { NavLink } from 'react-router-dom'
 import logo from 'support/assets/mango.png'
-import { IconChevronDown } from '@tabler/icons'
+import { IconChevronDown } from '@tabler/icons-react'
 
 import { 
     createStyles, 

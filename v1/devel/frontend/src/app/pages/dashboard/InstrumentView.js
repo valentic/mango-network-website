@@ -2,7 +2,7 @@ import React from 'react'
 import { useQuery, useQueries } from '@tanstack/react-query'
 import { apiService } from 'services'
 import { DateTime } from 'luxon'
-import { IconVideo, IconArrowLeft, IconArrowRight } from '@tabler/icons'
+import { IconVideo, IconArrowLeft, IconArrowRight } from '@tabler/icons-react'
 
 import { Calendar } from '@mantine/dates'
 import { isSameDate } from '@mantine/dates'
