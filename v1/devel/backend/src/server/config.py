@@ -6,6 +6,9 @@
 #   2019-07-03  Todd Valentic
 #               Initial implementation
 #
+#   2023-02-03  Todd Valentic
+#               Add branch to tincan database name
+#
 ###################################################################
 
 import os
@@ -54,7 +57,7 @@ class Production(Config):
     SQLALCHEMY_BINDS = {
         'users':    f'{PREFIX}-users-prod',
         'mango':    f'{Config.SQLALCHEMY_URI}/mango',
-        'tincan':   f'{Config.SQLALCHEMY_URI}/tincan'
+        'tincan':   f'{Config.SQLALCHEMY_URI}/tincan.v1-prod'
     }
 
 class Development(Config):
@@ -66,7 +69,7 @@ class Development(Config):
     SQLALCHEMY_BINDS = {
         'users':    f'{PREFIX}-users-devel',
         'mango':    f'{Config.SQLALCHEMY_URI}/mango',
-        'tincan':   f'{Config.SQLALCHEMY_URI}/tincan'
+        'tincan':   f'{Config.SQLALCHEMY_URI}/tincan.v1-devel'
     }
 
 
