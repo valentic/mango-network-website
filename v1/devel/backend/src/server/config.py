@@ -69,7 +69,7 @@ class Development(Config):
     SQLALCHEMY_BINDS = {
         'users':    f'{PREFIX}-users-devel',
         'mango':    f'{Config.SQLALCHEMY_URI}/mango',
-        'tincan':   f'{Config.SQLALCHEMY_URI}/tincan.v1-devel'
+        'tincan':   f'{Config.SQLALCHEMY_URI}/tincan.v1-prod'
     }
 
 
