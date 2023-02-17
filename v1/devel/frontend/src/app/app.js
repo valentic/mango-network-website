@@ -48,18 +48,25 @@ const App = () => {
               <Route index element={<Navigate to="software" replace />} />
             </Route>
 
-            <Route path="database" element={<Page.Dashboard.Home/>} >
+            <Route path="database" element={<Page.Dashboard.Home/>} > 
+              <Route path="fusion">
+                <Route index element={<Page.Dashboard.Fusion.Redirect />} />
+                <Route path=":product" >
+                  <Route index element={<Page.Dashboard.Fusion.Data.Redirect />} />
+                  <Route path=":date" element={<Page.Dashboard.Fusion.Data.View />} />
+                </Route>
+              </Route>
               <Route path="sites">
                 <Route index element={<Page.Dashboard.Stations.List />} />
                 <Route path=":station">
                   <Route index element={<Page.Dashboard.Instrument.Redirect />} />
                   <Route path=":instrument" >
-                    <Route index element={<Page.Dashboard.Instrument.ViewRedirect />} />
-                    <Route path=":date" element={<Page.Dashboard.Instrument.View />} />
+                    <Route index element={<Page.Dashboard.Instrument.Data.Redirect />} />
+                    <Route path=":date" element={<Page.Dashboard.Instrument.Data.View />} />
                   </Route>
                 </Route>
                </Route>
-               <Route index element={<Navigate to="sites" replace />} />
+               <Route index element={<Navigate to="sites" replace />} /> 
             </Route>
 
 

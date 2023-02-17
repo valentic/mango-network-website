@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom'
 import { ComposableMap, Geographies, Geography, Marker } from 'react-simple-maps'
 
 import geoUrl from 'support/assets/states-10m.json'
-//import { getElapsed } from './GetElapsed'
 
 import {
     useMantineTheme,

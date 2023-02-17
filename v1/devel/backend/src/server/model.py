@@ -274,3 +274,14 @@ class MeshGroup(db.Model):
     __table_args__ = {'autoload': True, 'autoload_with': db.engine }
     pass
 
+class FusionProduct(db.Model):
+    __tablename__ = 'fusionproduct'
+    __bind_key__ = 'mango'
+    __table_args__ = {'autoload': True, 'autoload_with': db.engine }
+    pass
+
+class FusionData(db.Model):
+    __tablename__ = 'fusiondata'
+    __bind_key__ = 'mango'
+    __table_args__ = {'autoload': True, 'autoload_with': db.engine }
+    pass

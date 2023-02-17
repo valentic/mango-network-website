@@ -68,9 +68,9 @@ const Layout = () => {
         <Box className={classes.page}> 
           <AppHeader className={classes.header} links={links} /> 
           <main className={classes.main}> 
-            <section className={classes.section} > 
+            { /* <section className={classes.section} > */ }
               <Outlet />
-            </section>
+            { /* </section> */ }
           </main>
           <AppFooter className={classes.footer}/> 
         </Box>

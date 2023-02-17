@@ -1,5 +1,4 @@
 import React from 'react'
-import moment from 'moment'
 
 import {
     createStyles,
@@ -16,7 +15,6 @@ const useStyles = createStyles((theme) => {
             position: 'relative',
             height: '100%',
             width: '100%',
-            backgroundColor: 'black', 
         },
 
         player: {
@@ -68,30 +66,14 @@ const useStyles = createStyles((theme) => {
 
 })    
 
-const MakeURL = (station,instrument,date) => {
+const MovieViewer = ({url}) => {
 
-    // Example URL: https://data.mangonetwork.org/data/transport/mango/archive/cfs/greenline/quicklook/2021/223/mango-cfs-greenline-quicklook-20210811.webm
-
-    const mdate = moment(date)
-    const host = 'https://data.mangonetwork.org'
-    const path = `data/transport/mango/archive/${station}/${instrument}/quicklook`
-    const dpath = mdate.utc().format('YYYY/DDDD')
-    const dname = mdate.utc().format('YYYYMMDD')
-    const filename = `mango-${station}-${instrument}-quicklook-${dname}`
-
-    const url = `${host}/${path}/${dpath}/${filename}`
-
-    return url
-
-}
-
-const MovieViewer = ({date,station,instrument}) => {
+    // URL excludes the file extension. We will add them for all the video formats
 
     const { classes, cx } = useStyles()
     const [ error, setError ] = React.useState(false)
     const videoRef = React.useRef()
 
-    const url = MakeURL(station, instrument, date) 
     const mp4 = `${url}.mp4`
     const webm = `${url}.webm`
 

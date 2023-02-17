@@ -52,10 +52,27 @@ const getQuicklooks = async (station, instrument) => {
     return response.data
 }
 
+const getFusionProducts = async () => {
+    const response = await axios_api.get('/fusion')
+    return response.data
+}
+
+const getFusionData = async (product) => {
+    const response = await axios_api.get(`/fusion/${product}`)
+    const result = response.data.fusiondata.map(entry => {
+        entry.timestamp = new Date(entry.timestamp) 
+        return entry
+    })
+    response.data.fusiondata = result
+    return response.data
+}
+
 export const apiService = {
     getStations,
     getCameras,
     getQuicklooks,
-    getMeshNodes
+    getMeshNodes,
+    getFusionProducts,
+    getFusionData
 }
 

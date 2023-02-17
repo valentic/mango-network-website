@@ -181,8 +181,6 @@ const AppHeader = ({ links, className }) => {
 
           <Transition transition="pop-top-right" duration={200} mounted={opened}>
             {(styles) => {
-                console.log('hello')
-                console.log('styles',styles)
                 return (
               <Paper className={classes.dropdown} withBorder style={styles}>
                 {items}

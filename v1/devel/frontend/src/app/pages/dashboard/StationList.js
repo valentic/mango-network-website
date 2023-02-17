@@ -7,20 +7,48 @@ import { print } from 'support/helpers/print_kit'
 import { RetiredStations } from 'support/assets/retiredstations'
 
 import {
+    Box,
     Container,
-    Title,
-    LoadingOverlay,
-    Table,
-    Grid,
-    Text,
-    Paper,
     createStyles,
+    LoadingOverlay,
+    Paper,
+    Table,
+    Text,
+    Title,
 } from '@mantine/core'
 
 const useStyles = createStyles((theme) => {
 
     return {
+        wrapper: {
+            height: '100%',
+            display: 'grid',
+            gridTemplateColumns: '1fr 1fr',
+            gridTemplateRows: '1fr',
+            gridTemplateAreas: "'sites' 'map'",
+            columnGap: '1em',
+
+            [ theme.fn.smallerThan('sm')]: {
+                gridTemplateColumns: '1fr',
+                gridTemplateRows: 'auto 1fr',
+                gridTemplateAreas: "'map' 'sites'",
+                rowGap: '1em'
+            }
+        },
+
+        sites: {
+            gridArea: 'sites',
+            overflow: 'auto',
+        },
+
+        thead: {
+            position: 'sticky',
+            top: 0,
+            background: theme.colors.gray[3] 
+        },
+
         row: {
+            gridArea: 'map',
             cursor: 'pointer'
         }
     }
@@ -166,33 +194,29 @@ const StationList = () => {
     })
 
     return (
-        <>
-          <Grid>
-            <Grid.Col sm={6} order={2} orderSm={1}>
-              <Paper withBorder>
-                <Table highlightOnHover verticalSpacing="5" fontSize="xs"> 
-                  <thead>
-                    <tr>
-                      <th>Site</th>
-                      <th style={{textAlign: 'right'}}>Instruments</th>
-                      <th style={{textAlign: 'right'}}>Heartbeat</th>
-                    </tr>
-                  </thead>
-                  <tbody>{rows}</tbody>
-                </Table>
-              </Paper>
-            </Grid.Col>
-            <Grid.Col sm={6} order={1} orderSm={2}>
-              <StationMap 
-                sites={meshnodes} 
-                active={hoverStation}
-                setActive={setHoverStation}
-              />
-            </Grid.Col>
-          </Grid>
+        <Box className={classes.wrapper}>
+          <Paper withBorder className={classes.sites}>
+            <Table highlightOnHover verticalSpacing="5" fontSize="xs">
+              <thead className={classes.thead}>
+                <tr>
+                  <th>Site</th>
+                  <th style={{textAlign: 'right'}}>Instruments</th>
+                  <th style={{textAlign: 'right'}}>Heartbeat</th>
+                </tr>
+              </thead>
+              <tbody>{rows}</tbody>
+            </Table>
+          </Paper>
+          <Box className={classes.map}>
+            <StationMap 
+              sites={meshnodes} 
+              active={hoverStation}
+              setActive={setHoverStation}
+            />
+          </Box>
 
           <Outlet />
-        </>
+        </Box>
     )
 }
 

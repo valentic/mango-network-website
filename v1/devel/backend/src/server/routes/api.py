@@ -39,6 +39,19 @@ meshnode_fields = {
     'longitude':    fields.Float
 }
 
+fusionproduct_fields = {
+    'id':       fields.Integer,
+    'name':     fields.String,
+    'title':    fields.String,
+    'label':    fields.String,
+    'order':    fields.Integer,
+}
+
+fusiondata_fields = {
+    'id':           fields.Integer,
+    'timestamp':    fields.DateTime(dt_format='iso8601')
+}
+
 @bp.route('/page/<path:path>')
 def get_page(path):
     page = pages.get_or_404(path)
@@ -144,7 +157,14 @@ class HandleQuicklooks(Resource):
         stationinstrument = model.StationInstrument.query.filter_by(
             station_id=station.id,
             instrument_id=instrument.id
-            ).first_or_404()
+            ).first()
+
+        # Lets a page gracefully show no data for this source rather than an error. 
+        # This is useful when scrolling through sites that might not have all of the
+        # same instrumentation.
+
+        if not stationinstrument:
+            return []
 
         quicklooks = (
             model.QuickLookMovie.query
@@ -154,8 +174,37 @@ class HandleQuicklooks(Resource):
 
         return quicklooks.all()
 
-api.add_resource(HandleStations,    '/stations')
-api.add_resource(HandleQuicklooks,  '/quicklooks/<station_name>/<instrument_name>')
-api.add_resource(HandleCameras,     '/cameras')
-api.add_resource(HandleMeshNodes,   '/meshnodes')
+class HandleFusionProducts(Resource):
+ 
+    @marshal_with(fusionproduct_fields, envelope='products')
+    def get(self):
+
+        query = (
+            model.FusionProduct.query
+            .order_by(model.FusionProduct.order)
+            )
+
+        return query.all()
+
+class HandleFusionData(Resource):
+
+    @marshal_with(fusiondata_fields, envelope='fusiondata')
+    def get(self, product_name):
+        product = model.FusionProduct.query.filter_by(name=product_name).first_or_404() 
+
+        datafiles = (
+            model.FusionData.query
+            .filter_by(product_id=product.id)
+            .order_by(model.FusionData.timestamp)
+            )
+
+        return datafiles.all()
+
+
+api.add_resource(HandleStations,        '/stations')
+api.add_resource(HandleQuicklooks,      '/quicklooks/<station_name>/<instrument_name>')
+api.add_resource(HandleFusionProducts,  '/fusion')
+api.add_resource(HandleFusionData,      '/fusion/<product_name>')
+api.add_resource(HandleCameras,         '/cameras')
+api.add_resource(HandleMeshNodes,       '/meshnodes')
 

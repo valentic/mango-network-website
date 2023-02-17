@@ -1,11 +1,11 @@
 //////////////////////////////////////////////////////////////////////////
 //
-//  InstrumentViewRedirect
+//  FusionDataRedirect
 //
-//  Shown when only the station/instrument is present in the path. It 
+//  Shown when only the fusion product is present in the path. It 
 //  redirects to the date of the last data record. 
 //
-//  2022-07-29  Todd Valentic
+//  2023-02-14  Todd Valentic
 //              Initial implementation
 //
 //////////////////////////////////////////////////////////////////////////
@@ -15,17 +15,15 @@ import { useParams, Navigate } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import { apiService } from 'services'
 import { DateTime } from 'luxon'
+import { LoadingOverlay } from '@mantine/core'
 
-import { Container } from '@mantine/core'
-
-const InstrumentViewRedirect = () => {
+const FusionDataRedirect = () => {
 
     const params = useParams()
-    const station = params.station 
-    const instrument = params.instrument
+    const product = params.product 
 
-    const query = useQuery(['quicklooks',station,instrument],
-        () => apiService.getQuicklooks(station, instrument),
+    const query = useQuery(['fusion', product],
+        () => apiService.getFusionData(product),
         {
             retry: (count, { response }) => response.status !== 404
         })
@@ -36,23 +34,19 @@ const InstrumentViewRedirect = () => {
 
     if (query.isSuccess) {
 
-        if (query.data?.quicklooks.length>0) {
-            const quicklooks = query.data.quicklooks
-            const jsdate = quicklooks[quicklooks.length-1].timestamp
+        if (query.data?.fusiondata.length>0) {
+            const fusiondata = query.data.fusiondata
+            const jsdate = fusiondata[fusiondata.length-1].timestamp
             const dt = DateTime.fromJSDate(jsdate, { zone: 'UTC' })
             const path = dt.toISODate()
             return <Navigate to={`./${path}`} />
-        } else {
+        } else { 
             return <Navigate to='/dashboard' replace/>
         }
     }
 
-    return (
-        <Container>
-            Waiting for data
-        </Container>
-    )
+    return <LoadingOverlay visible={true} />
 }
 
-export { InstrumentViewRedirect }
+export { FusionDataRedirect }
 

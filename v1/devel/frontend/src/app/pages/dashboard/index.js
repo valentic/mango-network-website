@@ -1,8 +1,13 @@
 import { Home } from './Home'
 import { StationList } from './StationList'
-import { InstrumentView } from './InstrumentView'
-import { InstrumentViewRedirect } from './InstrumentViewRedirect'
+
 import { InstrumentRedirect } from './InstrumentRedirect'
+import { InstrumentDataView } from './InstrumentDataView'
+import { InstrumentDataRedirect } from './InstrumentDataRedirect'
+
+import { FusionRedirect } from './FusionRedirect'
+import { FusionDataRedirect } from './FusionDataRedirect'
+import { FusionDataView } from './FusionDataView'
 
 const Dashboard = {
     
@@ -13,9 +18,19 @@ const Dashboard = {
     },
 
     Instrument: {
-        View:           InstrumentView,
         Redirect:       InstrumentRedirect,
-        ViewRedirect:   InstrumentViewRedirect
+        Data: {
+            Redirect:   InstrumentDataRedirect,
+            View:       InstrumentDataView,
+        }
+    },
+
+    Fusion: {
+        Redirect:       FusionRedirect,
+        Data: {
+            Redirect:   FusionDataRedirect,
+            View:       FusionDataView
+        }
     }
 }
 

@@ -14,8 +14,7 @@ import React from 'react'
 import { useParams, Navigate } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import { apiService } from 'services'
-
-import { Container, Title } from '@mantine/core'
+import { LoadingOverlay } from '@mantine/core'
 
 const InstrumentRedirect = () => {
 
@@ -24,12 +23,7 @@ const InstrumentRedirect = () => {
     const station = params.station 
 
     if (query.isError) {
-        return (
-          <Container>
-            <Title>Error</Title>
-            <div>{query.error.message}</div>
-          </Container>
-        )
+        return <Navigate to="/" replace />
     }
 
     if (query.isSuccess) {
@@ -43,11 +37,7 @@ const InstrumentRedirect = () => {
         }
     }
 
-    return (
-        <Container>
-            Waiting for data
-        </Container>
-    )
+    return <LoadingOverlay visible={true} />
 }
 
 export { InstrumentRedirect }
