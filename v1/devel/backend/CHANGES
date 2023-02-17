@@ -16,3 +16,8 @@
     - Release 1.0.10
     - Add publications list
 
+2023-02-18  Todd Valentic
+    - Release 1.0.13
+    - Add fusion data products
+    - Add fusion view pages
+    - Refactor data view to support multiple types 
