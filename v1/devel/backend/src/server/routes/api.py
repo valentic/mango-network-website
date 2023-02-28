@@ -153,6 +153,7 @@ class HandleQuicklooks(Resource):
     def get(self, station_name, instrument_name):
         station = model.Station.query.filter_by(name=station_name).first_or_404() 
         instrument = model.Instrument.query.filter_by(name=instrument_name).first_or_404() 
+        product = model.ProcessedProduct.query.filter_by(name='quicklook').first_or_404()
 
         stationinstrument = model.StationInstrument.query.filter_by(
             station_id=station.id,
@@ -167,9 +168,9 @@ class HandleQuicklooks(Resource):
             return []
 
         quicklooks = (
-            model.QuickLookMovie.query
-            .filter_by(stationinstrument_id=stationinstrument.id)
-            .order_by(model.QuickLookMovie.timestamp)
+            model.ProcessedData.query
+            .filter_by(stationinstrument_id=stationinstrument.id, product_id=product.id)
+            .order_by(model.ProcessedData.timestamp)
             )
 
         return quicklooks.all()

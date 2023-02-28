@@ -256,11 +256,11 @@ class Image(db.Model):
     __table_args__ = {'autoload': True, 'autoload_with': db.engine }
     pass
 
-class QuickLookMovie(db.Model):
-    __tablename__ = 'quicklookmovie'
-    __bind_key__ = 'mango'
-    __table_args__ = {'autoload': True, 'autoload_with': db.engine }
-    pass
+#class QuickLookMovie(db.Model):
+#    __tablename__ = 'quicklookmovie'
+#    __bind_key__ = 'mango'
+#    __table_args__ = {'autoload': True, 'autoload_with': db.engine }
+#    pass
 
 class MeshNode(db.Model):
     __tablename__ = 'mesh_node'
@@ -271,6 +271,18 @@ class MeshNode(db.Model):
 class MeshGroup(db.Model):
     __tablename__ = 'mesh_group'
     __bind_key__ = 'tincan'
+    __table_args__ = {'autoload': True, 'autoload_with': db.engine }
+    pass
+
+class ProcessedProduct(db.Model):
+    __tablename__ = 'processed_product'
+    __bind_key__ = 'mango'
+    __table_args__ = {'autoload': True, 'autoload_with': db.engine }
+    pass
+
+class ProcessedData(db.Model):
+    __tablename__ = 'processed_data'
+    __bind_key__ = 'mango'
     __table_args__ = {'autoload': True, 'autoload_with': db.engine }
     pass
 
