@@ -7,6 +7,8 @@ from flask_mail import Message
 
 from server import db, pages, model
 
+import requests
+
 bp = Blueprint('api',__name__,url_prefix='/api',template_folder='templates')
 api = Api(bp)
 
@@ -51,6 +53,20 @@ fusiondata_fields = {
     'id':           fields.Integer,
     'timestamp':    fields.DateTime(dt_format='iso8601')
 }
+
+statistics_product_fields = {
+    'id':       fields.Integer,
+    'name':     fields.String,
+    'title':    fields.String,
+    'label':    fields.String,
+    'order':    fields.Integer,
+}
+
+statistics_data_fields = {
+    'id':           fields.Integer,
+    'timestamp':    fields.DateTime(dt_format='iso8601')
+}
+
 
 @bp.route('/page/<path:path>')
 def get_page(path):
@@ -201,11 +217,45 @@ class HandleFusionData(Resource):
 
         return datafiles.all()
 
+class HandleStatisticsProducts(Resource):
+ 
+    @marshal_with(statistics_product_fields, envelope='products')
+    def get(self):
 
-api.add_resource(HandleStations,        '/stations')
-api.add_resource(HandleQuicklooks,      '/quicklooks/<station_name>/<instrument_name>')
-api.add_resource(HandleFusionProducts,  '/fusion')
-api.add_resource(HandleFusionData,      '/fusion/<product_name>')
-api.add_resource(HandleCameras,         '/cameras')
-api.add_resource(HandleMeshNodes,       '/meshnodes')
+        query = (
+            model.StatisticProduct.query
+            .order_by(model.StatisticProduct.order)
+            )
+
+        return query.all()
+
+class HandleStatisticsData(Resource):
+
+    #@marshal_with(statistics_data_fields, envelope='statistics_data')
+    def get(self, product_name):
+
+        product = model.StatisticProduct.query.filter_by(name=product_name).first_or_404() 
+
+        if (product_name == 'uptime-table'):
+            url = 'https://data.mangonetwork.org/data/transport/mango/var/uptime-table.json'
+            return requests.get(url).json()
+
+        #datafiles = (
+        #    model.FusionData.query
+        #    .filter_by(product_id=product.id)
+        #    .order_by(model.FusionData.timestamp)
+        #    )
+
+        #return datafiles.all()
+        return [] 
+
+
+api.add_resource(HandleStations,            '/stations')
+api.add_resource(HandleQuicklooks,          '/quicklooks/<station_name>/<instrument_name>')
+api.add_resource(HandleFusionProducts,      '/fusion')
+api.add_resource(HandleFusionData,          '/fusion/<product_name>')
+api.add_resource(HandleStatisticsProducts,  '/statistics')
+api.add_resource(HandleStatisticsData,      '/statistics/<product_name>')
+api.add_resource(HandleCameras,             '/cameras')
+api.add_resource(HandleMeshNodes,           '/meshnodes')
 

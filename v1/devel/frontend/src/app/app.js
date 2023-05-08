@@ -56,6 +56,12 @@ const App = () => {
                   <Route path=":date" element={<Page.Dashboard.Fusion.Data.View />} />
                 </Route>
               </Route>
+
+              <Route path="statistics">
+                <Route index element={<Page.Dashboard.Statistics.Redirect />} />
+                <Route path=":product" index element={<Page.Dashboard.Statistics.Data.View />} />
+              </Route>
+
               <Route path="sites">
                 <Route index element={<Page.Dashboard.Stations.List />} />
                 <Route path=":station">

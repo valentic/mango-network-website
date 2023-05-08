@@ -297,3 +297,12 @@ class FusionData(db.Model):
     __bind_key__ = 'mango'
     __table_args__ = {'autoload': True, 'autoload_with': db.engine }
     pass
+
+class StatisticProduct(db.Model):
+    __tablename__ = 'statisticproduct'
+    __bind_key__ = 'mango'
+    __table_args__ = {'autoload': True, 'autoload_with': db.engine }
+    pass
+
+
+

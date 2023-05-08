@@ -9,12 +9,15 @@ import { FusionRedirect } from './FusionRedirect'
 import { FusionDataRedirect } from './FusionDataRedirect'
 import { FusionDataView } from './FusionDataView'
 
+import { StatisticsRedirect } from './StatisticsRedirect'
+import { StatisticsDataView } from './StatisticsDataView'
+
 const Dashboard = {
     
     Home:   Home,
 
     Stations: {
-        List:   StationList
+        List:           StationList
     },
 
     Instrument: {
@@ -31,7 +34,15 @@ const Dashboard = {
             Redirect:   FusionDataRedirect,
             View:       FusionDataView
         }
+    },
+
+    Statistics: {
+        Redirect:       StatisticsRedirect,
+        Data: {
+            View:       StatisticsDataView
+        }
     }
+
 }
 
 export { Dashboard }

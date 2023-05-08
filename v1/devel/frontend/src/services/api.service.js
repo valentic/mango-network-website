@@ -67,12 +67,31 @@ const getFusionData = async (product) => {
     return response.data
 }
 
+const getStatisticsProducts = async () => {
+    const response = await axios_api.get('/statistics')
+    return response.data
+}
+
+const getStatisticsData = async (product) => {
+
+    const response = await axios_api.get(`/statistics/${product}`)
+    //const result = response.data.statistics_data.map(entry => {
+    //    entry.timestamp = new Date(entry.timestamp) 
+    //    return entry
+    //})
+    //response.data.statistics_data = result
+    return response.data
+}
+
+
 export const apiService = {
     getStations,
     getCameras,
     getQuicklooks,
     getMeshNodes,
     getFusionProducts,
-    getFusionData
+    getFusionData,
+    getStatisticsProducts,
+    getStatisticsData
 }
 

@@ -6,8 +6,9 @@ import {
 } from 'react-router-dom'
 
 import {
-    IconMapPins,
-    IconArrowsJoin
+    IconArrowsJoin,
+    IconFileAnalytics,
+    IconMapPins
 } from '@tabler/icons-react'
 
 import {
@@ -90,8 +91,9 @@ const Home = () => {
     const section = location.pathname.split('/')[2]
 
     const sectionMenu = [
-        { label: 'Sites',       link: 'sites',  icon: <IconMapPins/>      },
-        { label: 'Fusion',      link: 'fusion', icon: <IconArrowsJoin/>   }
+        { label: 'Sites',       link: 'sites',      icon: <IconMapPins/>        },
+        { label: 'Fusion',      link: 'fusion',     icon: <IconArrowsJoin/>     },
+        { label: 'Statistics',  link: 'statistics', icon: <IconFileAnalytics/>  }
         ]
 
     const tabs = sectionMenu.map((entry) => (

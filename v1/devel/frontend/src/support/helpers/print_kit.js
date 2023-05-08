@@ -16,6 +16,9 @@
  *  2022-08-16  Todd Valentic
  *              Use &nbsp (\u00A0)
  *
+ *  2023-05-08  Todd Valentic
+ *              Add as_bytes
+ *
 \********************************************************************/
 
 import moment from 'moment-timezone'
@@ -38,6 +41,33 @@ const not_set = (value) => {
 
 const capitalize = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+const as_bytes = (bytes, si=false, precision=1, addSpace=true) => {
+    
+    // https://stackoverflow.com/questions/10420352/converting-file-size-in-bytes-to-human-readable-string
+
+    const thresh = si ? 1000 : 1024
+    const space = addSpace ? '\u00A0' : ''
+
+    if (Math.abs(bytes) < thresh) {
+        return bytes + space + 'B'
+    }
+
+    const units = si 
+        ? ['kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'] 
+        : ['KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB']
+
+    let u = -1
+    const r = 10**precision
+
+    do {
+        bytes /= thresh;
+        ++u;
+    } while (Math.round(Math.abs(bytes) * r) / r >= thresh && u < units.length - 1);
+
+
+    return bytes.toFixed(precision) + space + units[u];
 }
 
 const as_hex = (value,width) => {
@@ -247,6 +277,7 @@ const print = {
     pad,
     not_set,
     capitalize,
+    as_bytes,
     as_hex,
     as_string,
     as_num,
