@@ -34,9 +34,10 @@ const FusionDataRedirect = () => {
 
     if (query.isSuccess) {
 
-        if (query.data?.fusiondata.length>0) {
-            const fusiondata = query.data.fusiondata
-            const jsdate = fusiondata[fusiondata.length-1].timestamp
+        const data = query.data[product] || []
+
+        if (data.length>0) {
+            const jsdate = data[data.length-1]
             const dt = DateTime.fromJSDate(jsdate, { zone: 'UTC' })
             const path = dt.toISODate()
             return <Navigate to={`./${path}`} />
