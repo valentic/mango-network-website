@@ -1,69 +1,175 @@
 import React from 'react'
-import map from './asi-map.png'
+import { useNavigate, Link } from 'react-router-dom'
+import mapImage from './mango-sites-crop.png'
+import fusionImage from './fusion-invert.jpg'
+import dataImage from './datalist.png'
+import { useDisclosure } from '@mantine/hooks'
 
 import { 
+    createStyles,
+    Badge,
+    Card,
     Container, 
     Image,
-    Grid,
+    Modal,
+    SimpleGrid,
     Text,
     Title,
-    MediaQuery
     } from '@mantine/core'
 
-const Home = () => {
+const useStyles = createStyles((theme) => ({
+
+    title: {
+        fontSize: 34,
+        fontWeight: 900,
+
+        [theme.fn.smallerThan('sm')]: {
+            fontSize: 24,
+        },
+    },
+
+    description: {
+        maxWidth: 600,
+        margin: 'auto',
+
+        '&::after': {
+            content: '""',
+            display: 'block',
+            backgroundColor: theme.fn.primaryColor(),
+            //width: rem(45),
+            //height: rem(2),
+            width: 45,
+            height: 2,
+            marginTop: theme.spacing.sm,
+            marginLeft: 'auto',
+            marginRight: 'auto',
+        },
+    },
+
+    card: {
+        border: `${1} solid ${
+              theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1]
+        }`,
+    },
+
+    cardTitle: {
+      fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+    },
+
+    cardImage: {
+        cursor: 'pointer'
+    },
+
+    cardHeader: {
+        backgroundColor: 'black'
+    }
+
+}))
+
+/*
+const FeatureData = [
+    {
+        title: 'Science',
+        description: 'Learn more about the <Link to="/about/science">science</Link>, instrumentation and field sites.',
+        //description: 'Learn more about the science, instrumentation and field sites.',
+        image: mapImage, 
+        modal: true
+    },
+
+    {
+        title: 'Data Explorer',
+        description: 'Navigate through the daily image collections and see movies from each site in the database catalog.',
+        image: fusionImage, 
+        link: '/database/fusion/winds-greenline/2023-05-11'
+    },
+
+    {
+        title: 'Data Access',
+        description: 'Blah blah blah',
+        image: dataImage, 
+        link: '/resources/data'
+    }
+]
+*/
+
+const Home = ()  => {
+
+    const { classes } = useStyles()
+    const navigate = useNavigate() 
+    const [ opened, { open, close } ] = useDisclosure()
+
+    const science = (
+        <Card key="science" radius="md" className={classes.card} padding="lg" withBorder >
+          <Card.Section mb="sm" onClick={open}>
+            <Modal opened={opened} onClose={close} title="Site Locations" size="auto">
+              <Image src={mapImage} alt="Science" />
+            </Modal>
+            <Image src={mapImage} alt="Science" height={180} className={classes.cardImage}/>
+          </Card.Section>
+          <Badge>Science</Badge>
+          <Text fz="sm" c="dimmed" mt="sm" lineClamp={4}>
+            Learn more about the project's{" "}<Link to="/about/science">science</Link>, 
+            {" "}<Link to="/about/instrument">instrumentation</Link>{" "}
+            and 
+            {" "}<Link to="/about/sites">field sites</Link>.
+          </Text>
+        </Card>
+    )
+
+    const explorer = (
+        <Card key="explorer" radius="md" className={classes.card} padding="lg" withBorder >
+          <Card.Section mb="sm" 
+            className={classes.cardHeader} 
+            onClick={() => navigate('/database/fusion/winds-greenline/2023-05-11')}
+            >
+            <Image 
+                src={fusionImage} alt="Fusion Image" 
+                height={180} fit="contain" 
+                className={classes.cardImage} />
+          </Card.Section>
+          <Badge>Data Explorer</Badge>
+          <Text fz="sm" c="dimmed" mt="sm" lineClamp={4}>
+            <Link to="/database">Navigate</Link>{" "}through the daily image collections and 
+            see movies from each field site in the database catalog.
+          </Text>
+        </Card>
+    )
+
+    const access = (
+        <Card key="access" radius="md" className={classes.card} padding="lg" withBorder >
+          <Card.Section mb="sm" 
+            className={classes.cardHeader} onClick={() => navigate('/resources/data')}
+            >
+            <Image 
+                src={dataImage} alt="Data Listing" 
+                height={160} p={10} fit="contain" 
+                className={classes.cardImage} />
+          </Card.Section>
+          <Badge>Data Products</Badge>
+          <Text fz="sm" c="dimmed" mt="sm" lineClamp={4}>
+            <Link to="/resources/data">Download</Link>{" "}the various data products.
+          </Text>
+        </Card>
+    )
 
     return (
-      <Container my="2em" size="md">
-        <Title color="slate"> Welcome to MANGO </Title>
+      <Container size="lg" py="xl">
 
-        <Grid gutter={60} justify="center">
-          <Grid.Col sm={6}>
-            <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
-              <Image radius="sm" src={map} alt="Site map"/>
-            </MediaQuery>
-            <Text size="sm" my="md" align="justify">
-              The Midlatitude Allsky-imaging Network for GeoSpace
-              Observations (MANGO) is a collection of all-sky cameras
-              and Fabry-Perot Interferometers (FPIs) spread across
-              the continental United States with the goal of imaging
-              large-scale airglow and aurora features in multiple
-              wavelengths and measure neutral winds and temperatures
-              associated with the observed dynamics. MANGO is used to
-              observe the generation, propagation, and dissipation of
-              medium and large-scale wave activity in the subauroral,
-              mid and low-latitude thermosphere. The network of seven
-              imagers observing emission from the atomic oxygen at
-              630nm wavelength ('red line') was deployed starting 2014,
-              later funded by NSF AGS award # 1452357. This network is
-              currently being augmented through NSF DASI award #1933013
-              with a network of atomic oxygen 557.7nm ('green line')
-              imagers in the western United States, along with four
-              FPIs that measure both red and green line winds. The map
-              below shows fields-of-view of all the current, past, and
-              potential instruments. At completion, there will be nine
-              green-line imagers in this network. These imagers form
-              a network providing continuous coverage over the western
-              United States, including California, Oregon, Washington,
-              Utah, Arizona and Texas extending south into Mexico. This
-              network sees high levels of both medium and large scale
-              wave activity.
-            </Text>
-            </Grid.Col> 
-            <Grid.Col sm={6}>
-              <MediaQuery smallerThan="sm" styles={{ display: 'none' }}>
-                <Image radius="sm" src={map} alt="Site map"/>
-              </MediaQuery>
-            </Grid.Col>
-          </Grid>
-          <Text size="xs" align="center" color="gray.7" pt="1em" px="4em">
-            <i>
-              This material is based upon work supported by the
-              National Science Foundation. Any opinions, findings and
-              conclusions are recommendations expressed in this material
-              are those of the author(s) and do not necessarily reflect
-              the views of the National Science Foundation (NSF).
-            </i>
-          </Text> 
+        <Title order={2} className={classes.title} ta="center" mt="sm">
+          Midlatitude Allsky-imaging Network for GeoSpace Observations 
+        </Title>
+
+        <Text c="dimmed" className={classes.description} ta="center"mt="sm">
+          A network of all-sky cameras and Fabry-Perot Interferometers to
+          observe wave activity in the thermosphere. 
+        </Text>
+ 
+        <SimpleGrid cols={3} spacing="xl" mt={50} breakpoints={[{maxWidth: 'sm', cols: 2}]} >
+          { science }
+          { explorer }
+          { access }
+        </SimpleGrid>
+
       </Container>
     )
 }

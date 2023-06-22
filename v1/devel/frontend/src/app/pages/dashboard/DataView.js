@@ -56,6 +56,7 @@ const useStyles = createStyles((theme, { viewerColor }) => {
 
 const DataView = ({
     data, 
+    downloads,
     utcdate, 
     title, 
     subtitle, 
@@ -92,6 +93,7 @@ const DataView = ({
             className={classes.calendar}
             selectedDate={utcdate}
             data={data}
+            downloads={downloads}
             title={title}
             subtitle={subtitle}
             onHeaderNext={onHeaderNext}

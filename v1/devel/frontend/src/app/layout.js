@@ -40,8 +40,9 @@ const Layout = () => {
     const auth = useAuth()
 
     const resourcesMenu = [
-        { label: 'Software',        link:   '/resources/software' },
-        { label: 'Mail Lists',      link:   '/resources/maillists' },
+        { label: 'Data',            link:  '/resources/data' },
+        { label: 'Software',        link:  '/resources/software' },
+        { label: 'Mail Lists',      link:  '/resources/maillists' },
         { label: 'Publications',    link:  '/resources/publications' },
         ]
 

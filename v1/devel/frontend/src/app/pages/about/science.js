@@ -1,5 +1,6 @@
 import React from 'react'
 import image from './icon_emissions.png'
+import sites from './mango-sites.png'
 
 import { 
     Container, 
@@ -7,7 +8,8 @@ import {
     Title,
     Grid,
     Image,
-    MediaQuery
+    MediaQuery,
+    Stack
     } from '@mantine/core'
 
 const Science = () => {
@@ -76,7 +78,10 @@ const Science = () => {
 
           <Grid.Col xs={6}>
             <MediaQuery smallerThan="sm" styles={{display: 'none'}}>
-              <Image radius="sm" src={image} alt="Icon Emissions" />
+              <Stack>
+                <Image radius="sm" src={image} alt="Icon Emissions" />
+                <Image radius="sm" src={sites} alt="Site Locations" />
+              </Stack>
             </MediaQuery>
           </Grid.Col>
         </Grid>

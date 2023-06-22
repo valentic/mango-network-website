@@ -13,9 +13,11 @@ import {
     ActionIcon,
     Button,
     Card,
+    Divider,
     Grid,
     Group,
     Stack,
+    Table,
     Text,
     useMantineTheme,
     createStyles,
@@ -61,8 +63,8 @@ const convertLocalToUTC = (date) => {
 
 const DayNavigation = ({selectedDate, data, onPrev, onNext}) => {
 
-    const disablePrev = data ? selectedDate <= data[0].timestamp : true
-    const disableNext = data ? selectedDate >= data[data.length-1].timestamp : true
+    const disablePrev = data ? selectedDate <= data[0] : true
+    const disableNext = data ? selectedDate >= data[data.length-1] : true
 
     return (
         <Group position="center">
@@ -71,17 +73,67 @@ const DayNavigation = ({selectedDate, data, onPrev, onNext}) => {
                 leftIcon={<IconArrowLeft/>}
                 disabled={disablePrev}
             >
-                Prev Day
+                Prev
             </Button>
             <Button 
                 onClick={onNext} 
                 rightIcon={<IconArrowRight/>}
                 disabled={disableNext}
             >
-                Next Day
+                Next
             </Button>
         </Group>
     )
+}
+
+const DownloadSection = ({selectedDate, downloads}) => {
+    
+    const rows = downloads.map(src => {
+        const active = src.data.some(ts => isSameDate(selectedDate, ts))
+
+        const buttons = src.exts.map(ext => {
+            return (
+              <Button 
+                key={ext}
+                disabled={!active} 
+                compact 
+                download
+                href={`${src.url}.${ext}`}
+                component='a'
+              >
+                {ext} 
+              </Button>
+            )
+        })
+
+        return (
+            <tr key={src.label}>
+              <td>
+                <Text c="dimmed" ta="right">{src.label}</Text>
+              </td>
+              <td>
+                <Group spacing="xs" ml="15">
+                  {buttons}
+                </Group>
+              </td>
+            </tr>
+        )
+    })
+
+    return (
+      <Stack mt={15}>
+        <Divider />
+        <Text fz="md" c="dimmed" ta="center">
+          Downloads
+        </Text>
+        <Table>
+          <tbody>
+            {rows}
+          </tbody>
+        </Table>
+      </Stack>
+    )
+
 }
 
 const CalendarHeader = ({title, subtitle, onPrev, onNext }) => {
@@ -115,12 +167,14 @@ const CalendarView = ({
     subtitle, 
     selectedDate, 
     data, 
+    downloads,
     onHeaderNext, 
     onHeaderPrev, 
     className
     }) => {
 
-    // data is a list of entries with a "timestamp" field
+    // data is a list of timestamps 
+    // downloads is a dictionary of data timestamp lists 
 
     const theme = useMantineTheme()
     const navigate = useNavigate()
@@ -129,14 +183,14 @@ const CalendarView = ({
         return null
     }
 
-    const minTime = convertUTCToLocal(data[0].timestamp)
-    const maxTime = convertUTCToLocal(data[data.length-1].timestamp)
+    const minTime = convertUTCToLocal(data[0])
+    const maxTime = convertUTCToLocal(data[data.length-1])
 
     maxTime.setMinutes(1)   // Need to make sure first of month is shown
 
     const excludeDate = localdate => {
         const utcdate = convertLocalToUTC(localdate)
-        return !data.some(e => isSameDate(utcdate, e.timestamp))
+        return !data.some(e => isSameDate(utcdate, e))
     }
 
     const changeDay = (utcdate, inc) => {
@@ -204,6 +258,10 @@ const CalendarView = ({
             data={data}
             onPrev={prevDay}
             onNext={nextDay}
+          />
+          <DownloadSection
+            selectedDate={selectedDate}
+            downloads={downloads}
           />
         </Stack>
       </Card>

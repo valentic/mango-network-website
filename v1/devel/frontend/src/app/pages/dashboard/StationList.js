@@ -3,7 +3,7 @@ import { useQueries } from '@tanstack/react-query'
 import { Outlet, useNavigate } from 'react-router-dom'
 import { apiService } from 'services'
 import { StationMap } from './StationMap'
-import { print } from 'support/helpers/print_kit'
+import { print } from 'support/helpers'
 import { RetiredStations } from 'support/assets/retiredstations'
 
 import {

@@ -21,19 +21,22 @@ import {
     LoadingOverlay,
 } from '@mantine/core'
 
-const MakeURL = (product, utcdate) => {
+const MakeURL = (prefix, product, utcdate) => {
 
     // Example URL: https://data.mangonetwork.org/data/transport/mango/archive/fusion/winds-greenline/2023/039/winds-greenline-20230208.mp4 
 
     const dt = DateTime.fromJSDate(utcdate, { zone: 'UTC' }) 
     const host = 'https://data.mangonetwork.org'
-    const path = `data/transport/mango/archive/fusion/${product}`
+    const path = `${prefix}/transport/mango/archive/fusion/${product}`
     const dpath = dt.toFormat('yyyy/ooo')
     const dname = dt.toFormat('yyyyLLdd')
     const filename = `${product}-${dname}`
 
     return `${host}/${path}/${dpath}/${filename}`
 }
+
+const MakeDataURL = (product, utcdate) => MakeURL('data', product, utcdate)
+const MakeDownloadURL = (product, utcdate) => MakeURL('download', product, utcdate)
 
 
 const FusionDataView = () => {
@@ -74,7 +77,7 @@ const FusionDataView = () => {
 
     const [ productsQuery, dataQuery ] = results
     const products = productsQuery.data?.products
-    const data = dataQuery.data?.fusiondata
+    const data = dataQuery.data
 
     if (results.some(query => query.isLoading)) {
         return <LoadingOverlay visible={true} />
@@ -100,6 +103,15 @@ const FusionDataView = () => {
         return <Navigate to="/" replace /> 
     }
 
+    const downloads = [
+        {
+            label: 'Movie',
+            data: data[product],
+            url: MakeDownloadURL(product, utcdate),
+            exts: ['mp4', 'webm']
+        }
+    ]
+
     const tabs = [
         {
             value: 'winds-greenline',
@@ -107,13 +119,14 @@ const FusionDataView = () => {
             color: 'gray',
             icon: <IconVideo size={20} />,
             disabled: !hasProduct('winds-greenline'),
-            panel: <MovieViewer url={MakeURL(product, utcdate)} />
+            panel: <MovieViewer url={MakeDataURL(product, utcdate)} />
         }
     ]
 
     return (
         <DataView
-            data={data}
+            data={data[product]}
+            downloads={downloads}
             utcdate={utcdate}
             title={productInfo.title}
             subtitle={productInfo.label}

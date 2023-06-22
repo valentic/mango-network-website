@@ -35,21 +35,21 @@ const getMeshNodes = async () => {
     return response.data
 }
 
-const getQuicklooks = async (station, instrument) => {
-    const response = await axios_api.get(`/quicklooks/${station}/${instrument}`)
-    const result = response.data.quicklooks.map(entry => {
-
-        const t = new Date(entry.timestamp)
-        t.setUTCHours(0)
-        t.setUTCMinutes(0)
-        t.setUTCSeconds(0)
-        t.setUTCMilliseconds(0)
-        
-        entry.timestamp = t 
-        return entry
-        })
-    response.data.quicklooks = result
-    return response.data
+const getProcessedData = async (station, instrument) => {
+    const response = await axios_api.get(`/processed/${station}/${instrument}`)
+    const result = Object.fromEntries(response.data.processed.map(product => {
+        const data = product.data.map(entry => {
+            const t = new Date(entry.timestamp)
+            t.setUTCHours(0)
+            t.setUTCMinutes(0)
+            t.setUTCSeconds(0)
+            t.setUTCMilliseconds(0)
+            
+            return t 
+            })
+        return [product.name, data]
+        }))
+    return result 
 }
 
 const getFusionProducts = async () => {
@@ -59,12 +59,10 @@ const getFusionProducts = async () => {
 
 const getFusionData = async (product) => {
     const response = await axios_api.get(`/fusion/${product}`)
-    const result = response.data.fusiondata.map(entry => {
-        entry.timestamp = new Date(entry.timestamp) 
-        return entry
+    const data = response.data.fusiondata.map(entry => {
+        return new Date(entry.timestamp) 
     })
-    response.data.fusiondata = result
-    return response.data
+    return Object.fromEntries([[product, data]])
 }
 
 const getStatisticsProducts = async () => {
@@ -87,7 +85,7 @@ const getStatisticsData = async (product) => {
 export const apiService = {
     getStations,
     getCameras,
-    getQuicklooks,
+    getProcessedData,
     getMeshNodes,
     getFusionProducts,
     getFusionData,

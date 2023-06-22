@@ -25,9 +25,14 @@ camera_fields = {
     'instrument':  fields.String
 }
 
-quicklook_fields = {
+processed_data_fields = {
     'id':           fields.Integer,
     'timestamp':    fields.DateTime(dt_format='iso8601')
+}
+
+processed_fields = {
+    'name':     fields.String,
+    'data':     fields.List(fields.Nested(processed_data_fields))
 }
 
 meshnode_fields = {
@@ -163,14 +168,13 @@ class HandleCameras(Resource):
 
         return results 
 
-class HandleQuicklooks(Resource):
+class HandleProcessedData(Resource):
 
-    @marshal_with(quicklook_fields, envelope='quicklooks')
+    @marshal_with(processed_fields, envelope='processed')
     def get(self, station_name, instrument_name):
+        
         station = model.Station.query.filter_by(name=station_name).first_or_404() 
         instrument = model.Instrument.query.filter_by(name=instrument_name).first_or_404() 
-        product = model.ProcessedProduct.query.filter_by(name='quicklook').first_or_404()
-
         stationinstrument = model.StationInstrument.query.filter_by(
             station_id=station.id,
             instrument_id=instrument.id
@@ -183,13 +187,21 @@ class HandleQuicklooks(Resource):
         if not stationinstrument:
             return []
 
-        quicklooks = (
-            model.ProcessedData.query
-            .filter_by(stationinstrument_id=stationinstrument.id, product_id=product.id)
-            .order_by(model.ProcessedData.timestamp)
-            )
+        products = model.ProcessedProduct.query.all()
 
-        return quicklooks.all()
+        result = [] 
+
+        for product in products:
+
+            query = (
+                model.ProcessedData.query
+                .filter_by(stationinstrument_id=stationinstrument.id, product_id=product.id)
+                .order_by(model.ProcessedData.timestamp)
+                )
+
+            result.append(dict(name=product.name, data=query.all()))
+
+        return result 
 
 class HandleFusionProducts(Resource):
  
@@ -251,7 +263,7 @@ class HandleStatisticsData(Resource):
 
 
 api.add_resource(HandleStations,            '/stations')
-api.add_resource(HandleQuicklooks,          '/quicklooks/<station_name>/<instrument_name>')
+api.add_resource(HandleProcessedData,       '/processed/<station_name>/<instrument_name>')
 api.add_resource(HandleFusionProducts,      '/fusion')
 api.add_resource(HandleFusionData,          '/fusion/<product_name>')
 api.add_resource(HandleStatisticsProducts,  '/statistics')

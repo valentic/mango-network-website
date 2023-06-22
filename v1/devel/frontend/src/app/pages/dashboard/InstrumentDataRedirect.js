@@ -8,6 +8,9 @@
 //  2022-07-29  Todd Valentic
 //              Initial implementation
 //
+//  2023-06-22  Todd Valentic
+//              Use new processed api endpoint
+//
 //////////////////////////////////////////////////////////////////////////
 
 import React from 'react'
@@ -23,8 +26,8 @@ const InstrumentDataRedirect = () => {
     const station = params.station 
     const instrument = params.instrument
 
-    const query = useQuery(['quicklooks',station,instrument],
-        () => apiService.getQuicklooks(station, instrument),
+    const query = useQuery(['processed',station,instrument],
+        () => apiService.getProcessedData(station, instrument),
         {
             retry: (count, { response }) => response.status !== 404
         })
@@ -34,9 +37,9 @@ const InstrumentDataRedirect = () => {
     }
 
     if (query.isSuccess) {
-        if (query.data?.quicklooks.length>0) {
-            const quicklooks = query.data.quicklooks
-            const jsdate = quicklooks[quicklooks.length-1].timestamp
+        const quicklooks = query.data.quicklook
+        if (quicklooks.length>0) {
+            const jsdate = quicklooks[quicklooks.length-1]
             const dt = DateTime.fromJSDate(jsdate, { zone: 'UTC' })
             const path = dt.toISODate()
             return <Navigate to={`./${path}`} />

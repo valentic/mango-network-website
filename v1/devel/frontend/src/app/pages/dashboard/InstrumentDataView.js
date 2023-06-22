@@ -21,18 +21,26 @@ import {
     LoadingOverlay,
 } from '@mantine/core'
 
-const MakeURL = (station, instrument, utcdate) => {
+const MakeURL = (prefix, station, instrument, product, utcdate) => {
 
     // Example URL: https://data.mangonetwork.org/data/transport/mango/archive/cfs/greenline/quicklook/2021/223/mango-cfs-greenline-quicklook-20210811.webm
 
     const dt = DateTime.fromJSDate(utcdate, { zone: 'UTC' })
     const host = 'https://data.mangonetwork.org'
-    const path = `data/transport/mango/archive/${station}/${instrument}/quicklook`
+    const path = `${prefix}/transport/mango/archive/${station}/${instrument}/${product}`
     const dpath = dt.toFormat('yyyy/ooo')
     const dname = dt.toFormat('yyyyLLdd')
-    const filename = `mango-${station}-${instrument}-quicklook-${dname}`
+    const filename = `mango-${station}-${instrument}-${product}-${dname}`
 
     return `${host}/${path}/${dpath}/${filename}`
+}
+
+const MakeDownloadURL = (station, instrument, product, utcdate) => {
+    return MakeURL('download', station, instrument, product, utcdate)
+}
+
+const MakeDataURL = (station, instrument, product, utcdate) => {
+    return MakeURL('data', station, instrument, product, utcdate)
 }
 
 const InstrumentDataView = () => {
@@ -75,8 +83,8 @@ const InstrumentDataView = () => {
                 refetchInterval: refetchInterval
             },
             {
-                queryKey: ['quicklooks',station,instrument],
-                queryFn: () => apiService.getQuicklooks(station, instrument),
+                queryKey: ['processed',station,instrument],
+                queryFn: () => apiService.getProcessedData(station, instrument),
                 refetchInterval: refetchInterval
             }
         ]
@@ -85,7 +93,22 @@ const InstrumentDataView = () => {
     const [ stationQuery, cameraQuery, dataQuery ] = results 
     const stations = stationQuery.data?.stations
     const cameras = cameraQuery.data?.cameras.filter(e => e.station === station)
-    const data = dataQuery.data?.quicklooks
+    const data = dataQuery.data
+
+    const downloads = [
+        {
+            label: 'Quicklook',
+            data: data?.quicklook,
+            url: MakeDownloadURL(station, instrument, 'quicklook', utcdate),
+            exts: ['mp4', 'webm']
+        },
+        {
+            label: 'Level-1',
+            data: data?.level1,
+            url: MakeDownloadURL(station, instrument, 'level1', utcdate),
+            exts: ['hdf5']
+        }
+    ]
 
     if (results.some(query => query.isLoading)) {
         return <LoadingOverlay visible={true} />
@@ -136,6 +159,8 @@ const InstrumentDataView = () => {
         }
     }
 
+    const url = MakeDataURL(station, instrument, 'quicklook', utcdate)
+
     const tabs = [
         { 
             value: 'greenline',   
@@ -143,7 +168,7 @@ const InstrumentDataView = () => {
             color: 'green.4',    
             icon:  <IconVideo size={20} />,
             disabled: !hasCamera('greenline'),
-            panel: <MovieViewer url={MakeURL(station, instrument, utcdate)} />
+            panel: <MovieViewer url={url} />
         },
         {
             value: 'redline',   
@@ -151,13 +176,14 @@ const InstrumentDataView = () => {
             color: 'red.4',    
             icon:  <IconVideo size={20} />,
             disabled: !hasCamera('redline'),
-            panel: <MovieViewer url={MakeURL(station, instrument, utcdate)} />
+            panel: <MovieViewer url={url} />
         }
     ]
 
     return (
         <DataView
-            data={data}
+            data={data?.quicklook}
+            downloads={downloads}
             utcdate={utcdate}
             title={stationInfo.name}
             subtitle={stationInfo.label}

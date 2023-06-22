@@ -42,6 +42,7 @@ const App = () => {
             </Route>
 
             <Route path="resources" element={<Page.Resources.Home/>} >
+              <Route path="data" element={<Page.Resources.Data/>} />
               <Route path="software" element={<Page.Resources.Software/>} />
               <Route path="maillists" element={<Page.Resources.MailLists/>} />
               <Route path="publications" element={<Page.Resources.Publications/>} />
