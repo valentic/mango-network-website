@@ -74,7 +74,7 @@ const Data = () => {
           <Box my="1em">
             <Title order={2} color="slate">FPI Wind Data</Title>
             <Text p="1em">
-              The FPI derived <Anchor href="http://airglow.ece.illinois.edu/Data/Calendar">wind data products</Anchor> are provided by Dr. Jonathan Makela at the University of Illinois. They are available at on the <Anchor href="http://cedar.openmadrigal.org">CEDAR Madrigal Database</Anchor>.
+              The FPI derived <Anchor href="http://airglow.ece.illinois.edu/Data/Calendar">wind data products</Anchor> are provided by Dr. Jonathan Makela at the University of Illinois. They are available at the <Anchor href="http://cedar.openmadrigal.org">CEDAR Madrigal Database</Anchor>.
             </Text>
           </Box>
 
