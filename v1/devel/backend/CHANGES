@@ -23,6 +23,14 @@
     - Refactor data view to support multiple types 
 
 2023-02-27  Todd Valentic
-    - Release 1.0.24
+    - Release 1.0.14
     - Refactor to use ProcessedData table
+
+2023-06-22 Todd Valentic
+    - Release 1.0.17
+    - Add download links to quickview
+    - Add CORS support on server
+    - Add data resource page
+    - Revise home page
+
 
