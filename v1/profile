@@ -1,0 +1,5 @@
+export PROJECT=mango_network_website
+export BRANCH=v1
+export PYTHON=python3.9
+export SITEROOT=/mango/v1
+export PORT=9302

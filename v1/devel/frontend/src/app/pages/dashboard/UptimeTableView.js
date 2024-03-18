@@ -60,8 +60,10 @@ const UptimeTableView = () => {
           <th style={{textAlign: 'right'}}>First Day</th>
           <th style={{textAlign: 'right'}}>Last Day</th>
           <th style={{textAlign: 'right'}}>Data Days</th>
-          <th style={{textAlign: 'right'}}>Total Days</th>
-          <th style={{textAlign: 'right'}}>Uptime</th>
+          <th style={{textAlign: 'right'}}>Online Days</th>
+          <th style={{textAlign: 'right'}}>Days&nbsp;to Date</th>
+          <th style={{textAlign: 'right'}}>Online Uptime</th>
+          <th style={{textAlign: 'right'}}>Uptime to Date</th>
         </tr>
     )
 
@@ -76,7 +78,9 @@ const UptimeTableView = () => {
                 <td style={{textAlign: 'right'}}>{entry.lastday}</td>
                 <td style={{textAlign: 'right'}}>{entry.datadays}</td>
                 <td style={{textAlign: 'right'}}>{entry.totaldays}</td>
+                <td style={{textAlign: 'right'}}>{entry.totaldays_today}</td>
                 <td style={{textAlign: 'right'}}>{print.as_percent(entry.uptime)}</td>
+                <td style={{textAlign: 'right'}}>{print.as_percent(entry.uptime_today)}</td>
             </tr>
         )
     })
