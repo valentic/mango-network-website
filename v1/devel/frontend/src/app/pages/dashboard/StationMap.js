@@ -26,6 +26,7 @@ const StationMap = ({sites, active, setActive}) => {
     const hour = 60*minute
 
     const markers = Object.values(sites).map(site => {
+
         const coord = [site.longitude, site.latitude]
         const size = site.name === active ? 8 : 6
 
@@ -83,7 +84,7 @@ const StationMap = ({sites, active, setActive}) => {
               ))
             }
           </Geographies>
-          {markers}
+          { markers } 
         </ComposableMap>
     )
 }

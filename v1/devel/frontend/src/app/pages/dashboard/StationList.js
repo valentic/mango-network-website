@@ -207,6 +207,7 @@ const StationList = () => {
               <tbody>{rows}</tbody>
             </Table>
           </Paper>
+          
           <Box className={classes.map}>
             <StationMap 
               sites={meshnodes} 
