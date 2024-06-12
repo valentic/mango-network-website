@@ -46,15 +46,6 @@ const papers = [
         doi: "https://doi.org/10.1029/2020GL092169"
     },
     {
-        key: "englert2023",
-        authors: "Englert, C.R., Harlander, J.M., Marr, K.D. et al.",
-        date: "2023",
-        title: "Michelson Interferometer for Global High-Resolution Thermospheric Imaging (MIGHTI) On-Orbit Wind Observations: Data Analysis and Instrument Performance.",
-        journal: "Space Sci Rev",
-        pages: "219, 27",
-        doi: ""
-    },
-    {
         key: "bhatt2023",
         authors: "Bhatt, A. N., Harding, B. J., Makela, J. J., Navarro, L., Lamarche, L., Valentic, T., Kendall, E. A., & Venkatraman, P.",
         date: "2023",
@@ -80,12 +71,21 @@ const papers = [
         journal: "Journal of Geophysical Research: Space Physics",
         pages: "128, e2023JA031601",
         doi: ""
+    },
+    {
+        key: "inchin2024",
+        authors: "Inchin, P. A., Bhatt, A., Bramberger, M., Chakraborty, S., Debchoudhury, S., & Heale, C.",
+        date: "2024",
+        title: "Atmospheric and ionospheric responses to orographic gravity waves prior to the December 2022 cold air outbreak",
+        journal: "Journal of Geophysical Research: Space Physics",
+        pages: "129, e2024JA032485",
+        doi: "https://doi.org/10.1029/2024JA032485"
     }
 ]
 
 const Publications = () => {
 
-    const items = papers.map(paper => (
+    const items = papers.toReversed().map(paper => (
         <List.Item key={paper.key}>
           <Text key={paper.key} span>
             { paper.authors }{" "}({paper.date}).{" "}{ paper.title }.{" "}
