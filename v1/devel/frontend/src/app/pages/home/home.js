@@ -32,19 +32,40 @@ const useStyles = createStyles((theme) => ({
         maxWidth: 600,
         margin: 'auto',
 
-        '&::after': {
+        /*
+         '&::after': {
             content: '""',
             display: 'block',
             backgroundColor: theme.fn.primaryColor(),
-            //width: rem(45),
-            //height: rem(2),
             width: 45,
             height: 2,
             marginTop: theme.spacing.sm,
             marginLeft: 'auto',
             marginRight: 'auto',
         },
+        */
     },
+
+    acknowledgement: {
+        maxWidth: 800,
+        margin: 'auto',
+        fontSize: 12,
+
+        /*
+          '&::before': {
+            content: '""',
+            display: 'block',
+            backgroundColor: theme.fn.primaryColor(),
+            width: 45,
+            height: 2,
+            marginTop: theme.spacing.lg,
+            marginBottom: theme.spacing.sm,
+            marginLeft: 'auto',
+            marginRight: 'auto',
+        },
+        */
+    },
+
 
     card: {
         border: `${1} solid ${
@@ -65,32 +86,6 @@ const useStyles = createStyles((theme) => ({
     }
 
 }))
-
-/*
-const FeatureData = [
-    {
-        title: 'Science',
-        description: 'Learn more about the <Link to="/about/science">science</Link>, instrumentation and field sites.',
-        //description: 'Learn more about the science, instrumentation and field sites.',
-        image: mapImage, 
-        modal: true
-    },
-
-    {
-        title: 'Data Explorer',
-        description: 'Navigate through the daily image collections and see movies from each site in the database catalog.',
-        image: fusionImage, 
-        link: '/database/fusion/winds-greenline/2023-05-11'
-    },
-
-    {
-        title: 'Data Access',
-        description: 'Blah blah blah',
-        image: dataImage, 
-        link: '/resources/data'
-    }
-]
-*/
 
 const Home = ()  => {
 
@@ -164,11 +159,20 @@ const Home = ()  => {
           observe wave activity in the thermosphere. 
         </Text>
  
-        <SimpleGrid cols={3} spacing="xl" mt={50} breakpoints={[{maxWidth: 'sm', cols: 2}]} >
+        <SimpleGrid cols={3} spacing="xl" mt={50} mb={50} breakpoints={[{maxWidth: 'sm', cols: 2}]} >
           { science }
           { explorer }
           { access }
         </SimpleGrid>
+
+        <Text c="dimmed" className={classes.acknowledgement} ta="center"mt="sm">
+            The imaging and FPI data are obtained through the MANGO network operated by SRI 
+            and University of Illinois, respectively. Work at SRI is supported through NSF 
+            award AGS-1933013, the University of California, Berkeley is supported through 
+            NSF award AGS-1933077, and at the University of Illinois is supported through 
+            NSF award AGS-1932953.
+        </Text>
+ 
 
       </Container>
     )
