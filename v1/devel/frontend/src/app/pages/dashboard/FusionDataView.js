@@ -116,11 +116,20 @@ const FusionDataView = () => {
         {
             value: 'winds-greenline',
             label: 'Winds (Green Line)',
-            color: 'gray',
+            color: 'green.4',
             icon: <IconVideo size={20} />,
             disabled: !hasProduct('winds-greenline'),
             panel: <MovieViewer url={MakeDataURL(product, utcdate)} />
+        },
+        {
+            value: 'winds-redline',
+            label: 'Winds (Red Line)',
+            color: 'red.4',
+            icon: <IconVideo size={20} />,
+            disabled: !hasProduct('winds-redline'),
+            panel: <MovieViewer url={MakeDataURL(product, utcdate)} />
         }
+
     ]
 
     return (
