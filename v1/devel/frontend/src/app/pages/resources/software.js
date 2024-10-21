@@ -10,6 +10,10 @@ import {
 const Software = () => {
 
     const repos = [
+        {   name:   'Tutorials',
+            desc:   'How to download, plot and manipulate MANGO airglow and FPI data',
+            url:    'https://github.com/mangonetwork/tutorials',
+        },
         {
             name:   'MCS',
             desc:   'MANGO Camera System (MCS) embedded system build package',
