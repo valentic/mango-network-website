@@ -8,7 +8,24 @@ import {
     List
     } from '@mantine/core'
 
-const papers = [
+const news_items = [
+    {
+        key: "nsf_aurora",
+        date: "2025",
+        source: "NSF",
+        title: "How to catch an aurora",
+        url: "https://www.nsf.gov/science-matters/how-catch-aurora",
+    },
+    {
+        key: "spaceweather_surprise",
+        date: "2021",
+        source: "spaceweather.com",
+        title: "Surprise: some red auroras are *not* auroras",
+        url: "https://www.spaceweather.com/archive.php?view=1&day=23&month=11&year=2021",
+    },
+]
+
+const journal_papers = [
     {
         key: "lyons2019",
         authors: "Lyons, L. R., Nishimura, Y., Zhang, S.-R., Coster, A. J., Bhatt, A., Kendall, E., & Deng, Y.",
@@ -83,15 +100,15 @@ const papers = [
     }
 ]
 
-const Publications = () => {
+const JournalPapers = ({records}) => {
 
-    const items = papers.toReversed().map(paper => (
-        <List.Item key={paper.key}>
-          <Text key={paper.key} span>
-            { paper.authors }{" "}({paper.date}).{" "}{ paper.title }.{" "}
-            <i>{paper.journal}</i>,{" "}
-            {paper.pages}.{" "} 
-            <Anchor href={paper.doi}>{paper.doi}</Anchor>
+    const items = records.map(item => (
+        <List.Item key={item.key}>
+          <Text key={item.key} span>
+            { item.authors }{" "}({item.date}).{" "}{ item.title }.{" "}
+            <i>{item.journal}</i>,{" "}
+            {item.pages}.{" "}
+            <Anchor href={item.doi}>{item.doi}</Anchor>
           </Text>
         </List.Item>
     ))
@@ -104,6 +121,39 @@ const Publications = () => {
           { items }
         </List>
 
+      </Container>
+    )
+}
+
+const NewsItems = ({records}) => {
+
+    const items = records.map(item => (
+        <List.Item key={item.key}>
+          <Text key={item.key} span>
+            <Anchor href={item.url}><i>{item.title}</i></Anchor>{" "}
+            ({item.source}, {item.date})
+          </Text>
+        </List.Item>
+    ))
+
+    return (
+      <Container my="2em" size="md">
+        <Title color="slate"> In the news </Title>
+
+        <List type="ordered" mt="1em" withPadding spacing="md">
+          { items }
+        </List>
+
+      </Container>
+    )
+}
+
+const Publications = () => {
+
+    return (
+      <Container my="2em" size="md">
+        <JournalPapers records={journal_papers} />
+        <NewsItems records={news_items} />
       </Container>
     )
 }
