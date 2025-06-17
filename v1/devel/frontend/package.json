@@ -1,6 +1,6 @@
 {
   "name": "frontend",
-  "version": "release",
+  "version": "1.0.27",
   "private": true,
   "homepage": "/mango/v1",
   "dependencies": {
