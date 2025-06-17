@@ -78,6 +78,15 @@ const Data = () => {
             </Text>
           </Box>
 
+          <Box my="1em">
+            <Title order={2} color="slate">Citation</Title>
+            <Text p="1em">
+            Please cite the use of your data with the following citation:
+
+            <Text p="1em">The imaging and FPI data are obtained through the MANGO network operated by SRI and University of Illinois, respectively. Work at SRI is supported through NSF award AGS-1933013 & AGS-2426523, the University of California, Berkeley is supported through NSF award AGS-1933077 & AGS-2426525, and at the University of Illinois is supported through NSF award AGS-1932953 & AGS-2426524.</Text>
+
+            </Text>
+          </Box>
 
         </Container>
     )

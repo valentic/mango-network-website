@@ -166,11 +166,13 @@ const Home = ()  => {
         </SimpleGrid>
 
         <Text c="dimmed" className={classes.acknowledgement} ta="center"mt="sm">
-            The imaging and FPI data are obtained through the MANGO network operated by SRI 
-            and University of Illinois, respectively. Work at SRI is supported through NSF 
-            award AGS-1933013, the University of California, Berkeley is supported through 
-            NSF award AGS-1933077, and at the University of Illinois is supported through 
-            NSF award AGS-1932953.
+            The imaging and FPI data are obtained through the MANGO
+            network operated by SRI and University of Illinois,
+            respectively. Work at SRI is supported through NSF award
+            AGS-1933013 & AGS-2426523, the University of California,
+            Berkeley is supported through NSF award AGS-1933077 &
+            AGS-2426525, and at the University of Illinois is supported
+            through NSF award AGS-1932953 & AGS-2426524.
         </Text>
  
 
